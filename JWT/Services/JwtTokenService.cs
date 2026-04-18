@@ -38,7 +38,6 @@ namespace JWT.Services
                 expires: DateTime.Now.AddMinutes(
                     Convert.ToDouble(_configuration["Jwt:ExpireMinutes"])), signingCredentials: creds);      // Attaches signature to token
 
-
             return new JwtSecurityTokenHandler().WriteToken(token); // Converts object → string
 
             /*
