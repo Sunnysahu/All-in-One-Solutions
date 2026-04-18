@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis", "D:\source\repos\Redis\Redis.csproj", "{6B69025F-419A-4D41-A9AA-A9A57FB88CEF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inbuild Caching", "..\Inbuild Caching\Inbuild Caching.csproj", "{D27BF7FB-502E-4497-958C-9CB9AA211914}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,10 +40,10 @@ Global
 		{F6C7EC14-2551-4463-8C67-AC7B74FF6651}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6C7EC14-2551-4463-8C67-AC7B74FF6651}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6C7EC14-2551-4463-8C67-AC7B74FF6651}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6B69025F-419A-4D41-A9AA-A9A57FB88CEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B69025F-419A-4D41-A9AA-A9A57FB88CEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6B69025F-419A-4D41-A9AA-A9A57FB88CEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6B69025F-419A-4D41-A9AA-A9A57FB88CEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D27BF7FB-502E-4497-958C-9CB9AA211914}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D27BF7FB-502E-4497-958C-9CB9AA211914}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D27BF7FB-502E-4497-958C-9CB9AA211914}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D27BF7FB-502E-4497-958C-9CB9AA211914}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
