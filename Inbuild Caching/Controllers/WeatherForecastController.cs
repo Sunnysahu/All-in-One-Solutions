@@ -15,7 +15,7 @@ namespace Inbuild_Caching.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        private readonly IMemoryCache _memory;
+        private readonly IMemoryCache _memory; // Cache Your code
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger, IMemoryCache memory)
         {

@@ -8,8 +8,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddMemoryCache(); // store data in RAM
-builder.Services.AddOutputCache();
+builder.Services.AddMemoryCache(); // store data (objects) in RAM 
+builder.Services.AddOutputCache(); // store HTTP response (not raw data) in RAM
 
 var app = builder.Build();
 
@@ -26,8 +26,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//app.UseResponseCaching();
-//app.UseOutputCache();
+//app.UseResponseCaching(); // Browser/Proxy
+//app.UseOutputCache(); // Server
 
 app.Run();
 
