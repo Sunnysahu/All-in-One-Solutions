@@ -18,7 +18,7 @@ namespace Redis.Controllers
         }
 
         [HttpGet]
-        [Route("GetAll")]
+        [Route("GetAllProducts")]
         public async Task<IActionResult> Get()
         {
 
@@ -37,8 +37,8 @@ namespace Redis.Controllers
             });
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet("GetProductById/{id}")]
+        public async Task<IActionResult> GetProductById(int id)
         {
             var data = await _service.GetById(id);
 
@@ -56,6 +56,7 @@ namespace Redis.Controllers
         }
 
         [HttpPost]
+        [Route("CreateProduct")]
         public async Task<IActionResult> Post(Product product)
         {
             var data = await _service.Create(product);
@@ -65,15 +66,15 @@ namespace Redis.Controllers
                 StatusCode = StatusCodes.Status204NoContent,
                 Message = "Data Not Found"
             }) :
-            CreatedAtAction(nameof(Get), new { id = data.Id }, new
+            Ok(new
             {
                 StatusCode = StatusCodes.Status201Created,
-                Message = "Product created successfully",
+                Message = "Product Create Successfully",
                 Data = data
             });
         }
 
-        [HttpPut]
+        [HttpPut("UpdateProduct")]
         public async Task<IActionResult> Put(Product product)
         {
             var result = await _service.Update(product);
@@ -81,7 +82,7 @@ namespace Redis.Controllers
             return result == true ? Ok(new
             {
                 StatusCode = StatusCodes.Status204NoContent,
-                Message = "Data Feteched Successfully"
+                Message = "Data Updated Successfully"
             }) : NotFound(new
             {
                 StatusCode = StatusCodes.Status204NoContent,
@@ -89,7 +90,7 @@ namespace Redis.Controllers
             });
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("DeleteProduct/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.Delete(id);
