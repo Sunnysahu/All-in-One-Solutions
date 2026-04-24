@@ -24,7 +24,11 @@ builder.Services.AddScoped<IRedisCacheService, RedisCacheService>();
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
-    options.Configuration = builder.Configuration["Redis:Connection"];
+    var connection = builder.Configuration["Redis:Connection"];
+    var user = builder.Configuration["Redis:User"];
+    var password = builder.Configuration["Redis:Password"];
+
+    options.Configuration = $"{connection},user={user},password={password}";
     options.InstanceName = builder.Configuration["Redis:InstanceName"];
 });
 
