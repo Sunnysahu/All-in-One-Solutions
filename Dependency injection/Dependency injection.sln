@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inbuild Caching", "..\Inbui
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis", "..\Redis\Redis.csproj", "{FA42FA59-4EE5-4494-A9E2-F1CE572FB815}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOTP", "..\TOTP\TOTP.csproj", "{9381F8AF-CA7C-4A0E-A54C-6F6BEB1BCACB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{FA42FA59-4EE5-4494-A9E2-F1CE572FB815}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA42FA59-4EE5-4494-A9E2-F1CE572FB815}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA42FA59-4EE5-4494-A9E2-F1CE572FB815}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9381F8AF-CA7C-4A0E-A54C-6F6BEB1BCACB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9381F8AF-CA7C-4A0E-A54C-6F6BEB1BCACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9381F8AF-CA7C-4A0E-A54C-6F6BEB1BCACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9381F8AF-CA7C-4A0E-A54C-6F6BEB1BCACB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
