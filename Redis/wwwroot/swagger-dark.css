@@ -1,0 +1,12 @@
+﻿body {
+    background-color: black !important;
+}
+
+.swagger-ui {
+    filter: invert(0) hue-rotate(180deg);
+    ;
+}
+
+    .swagger-ui .topbar {
+        background-color: #000000 !important;
+    }
