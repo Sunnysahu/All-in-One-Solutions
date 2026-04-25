@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis", "..\Redis\Redis.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOTP", "..\TOTP\TOTP.csproj", "{9381F8AF-CA7C-4A0E-A54C-6F6BEB1BCACB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Password Hasing", "..\Password Hasing\Password Hasing.csproj", "{67EC38BA-FA8E-4CDE-BD50-6E9A74ED2F4C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{9381F8AF-CA7C-4A0E-A54C-6F6BEB1BCACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9381F8AF-CA7C-4A0E-A54C-6F6BEB1BCACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9381F8AF-CA7C-4A0E-A54C-6F6BEB1BCACB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67EC38BA-FA8E-4CDE-BD50-6E9A74ED2F4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67EC38BA-FA8E-4CDE-BD50-6E9A74ED2F4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67EC38BA-FA8E-4CDE-BD50-6E9A74ED2F4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67EC38BA-FA8E-4CDE-BD50-6E9A74ED2F4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
