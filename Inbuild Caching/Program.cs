@@ -35,7 +35,7 @@ app.Run();
 //builder.Services.AddMemoryCache();
 //✔️ NO attribute
 //✔️ NO middleware
-// —> for maually and caching a single or some part of datacaching
+// —> for maually and caching a single or some part of data caching
 //——————————————
 
 //Client side caching 
@@ -48,9 +48,10 @@ app.Run();
 //use annotation in controller 
 
 // [ResponseCache(Duration = 60)]  // 60 sec cache
+// [ResponseCache(Duration = 5, Location = ResponseCacheLocation.Any)] // You may also need headers to allow caching
 //————————————
 
-//server Side caching
+//server Side caching --> full HTTP response
 //var builder = WebApplication.CreateBuilder(args);
 
 //builder.Services.AddOutputCache();
