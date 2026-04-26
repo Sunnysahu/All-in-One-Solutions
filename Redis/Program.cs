@@ -54,3 +54,36 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+/*
+ *public class ProductService
+{
+    private readonly IDistributedCache _cache;
+
+    public ProductService(IDistributedCache cache)
+    {
+        _cache = cache;
+    }
+
+    public async Task<string> GetProductAsync(int id)
+    {
+        var key = $"product_{id}";
+        var cached = await _cache.GetStringAsync(key);
+
+        if (cached != null)
+            return cached;
+
+        var data = $"Product {id} from DB";
+
+        await _cache.SetStringAsync(key, data, new DistributedCacheEntryOptions
+        {
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
+        });
+
+        return data;
+    }
+}
+
+// builder.Services.AddDistributedSqlServerCache(...) // also SQL Cache
+// IDistributedCache does NOT automatically use RAM, It only uses RAM if you configure
+*/
