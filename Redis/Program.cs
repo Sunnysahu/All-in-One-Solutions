@@ -85,5 +85,5 @@ app.Run();
 }
 
 // builder.Services.AddDistributedSqlServerCache(...) // also SQL Cache
-// IDistributedCache does NOT automatically use RAM, It only uses RAM if you configure
+// IDistributedCache does NOT automatically use RAM, It only uses RAM if you configure AddDistributedMemoryCache()
 */
