@@ -47,10 +47,15 @@ namespace Password_Hasing.Service
             if (result == null || string.IsNullOrEmpty(result.Email))
                 return new LoginDto {ErrorMessage = "Email Not Exist" };
 
-
-            if (!_passwordHasher.Verify(request.Password, result.PasswordHash))
+            var passwordResult = _passwordHasher.Verify(request.Password, result.PasswordHash);
+            if (!passwordResult.Verified) 
                 return new LoginDto {ErrorMessage = "Password is Incorrect"};
 
+            if (passwordResult.NeedRehash && passwordResult.NewHash != null)
+            {
+                await _userRepository.UpdateHash(passwordResult.NewHash, result.Id);
+                result.PasswordHash = passwordResult.NewHash;
+            }
 
             return new LoginDto
             {

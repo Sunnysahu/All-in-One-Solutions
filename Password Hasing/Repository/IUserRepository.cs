@@ -7,5 +7,6 @@ namespace Password_Hasing.Repository
         Task<User?> GetByEmailAsync(string email);
         Task<bool> EmailExistsAsync(string email);
         Task AddAsync(User user);
+        Task<bool> UpdateHash(string hash, int id);
     }
 }

@@ -28,5 +28,35 @@ namespace Password_Hasing.Repository
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> UpdateHash(string hash, int id)
+        {
+
+            // Cleanest and Safest
+            /*
+            var result = await _context.Users.FindAsync(id);
+            if (result == null)
+            {
+                return false;
+            }
+
+            result.PasswordHash = hash;
+            await _context.SaveChangesAsync();
+            */
+
+            // Classical Approach
+            /*
+            var result = await _context.Users.FindAsync(id);
+            if (result == null) return false;
+            result.PasswordHash = hash;
+            _context.Users.Update(result);
+            await _context.SaveChangesAsync();
+
+            */
+
+            // performance optimization: No database read before update and only updates PasswordHash Column
+
+            return await _context.Users.Where(x => x.Id == id).ExecuteUpdateAsync(setters => setters.SetProperty(x => x.PasswordHash, hash)) > 0;
+        }
     }
 }
