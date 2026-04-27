@@ -1,8 +1,9 @@
 ﻿using JWT.Data;
 using JWT.Models;
 using JWT.Repository;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
 
 namespace JWT.Services
 {
@@ -21,11 +22,42 @@ namespace JWT.Services
             _jwt = jwt;
         }
 
-        public async Task<LoginResponseDto?> Login(LoginRequestDto dto)
+        public async Task<LoginResponseDto?> Login(LoginRequestDto dto, CancellationToken cancellationToken)
         {
-            var user = await _repository.GetUserAsync(dto.Username, dto.Password);
+            /*
+            Manual cancel after time
+
+            // Create linked token (inherits client cancellation too)
+            using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
+            // Cancel token after 2 seconds (does NOT stop automatically)
+            cts.CancelAfter(2000); 
+
+            // Wait 5 sec BUT observe token → will cancel at 2 sec
+            await Task.Delay(5000, cts.Token); 
+
+            // Manual cancel here (optional, if not already cancelled)
+            cts.Cancel(); 
+
+            cts.Token.ThrowIfCancellationRequested(); // force stop if not already stopped
+            */
+
+            cancellationToken.ThrowIfCancellationRequested();
+            // simulate delay BEFORE DB
+
+            await Task.Delay(5000, cancellationToken);
+
+            Console.WriteLine("Print");
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            Console.WriteLine("Delay Over");
+
+            var user = await _repository.GetUserAsync(dto.Username, dto.Password, cancellationToken);
 
             if (user == null) return null;
+
+            cancellationToken.ThrowIfCancellationRequested();
 
             var accessToken = _jwt.GenerateAccessToken(user);
             var refreshToken = _jwt.GenerateRefreshToken();
@@ -37,9 +69,11 @@ namespace JWT.Services
                 AccessToken = accessToken,
                 RefreshToken = refreshToken,
             };
+
+            // -------------------
         }
 
-        public async Task<LoginResponseDto> Refresh(string refreshToken)
+        public async Task<LoginResponseDto?> Refresh(string refreshToken)
         {
             var token = await _context.RefreshTokens.FirstOrDefaultAsync(x => x.Token == refreshToken && !x.IsRevoked && x.ExpiryDate > DateTime.UtcNow);
 
@@ -47,6 +81,12 @@ namespace JWT.Services
 
             var user = await _context.Users.FindAsync(token.UserId);
 
+            if (user == null)
+            {
+                token.IsRevoked = true;
+                await _context.SaveChangesAsync();
+                return null;
+            }
             var newAccessToken = _jwt.GenerateAccessToken(user);
             var newRefreshToken = _jwt.GenerateRefreshToken();
 
@@ -61,7 +101,6 @@ namespace JWT.Services
                 RefreshToken = newRefreshToken
             };
         }
-
 
         public async Task SaveRefreshToken(int userId, string refreshToken)
         {

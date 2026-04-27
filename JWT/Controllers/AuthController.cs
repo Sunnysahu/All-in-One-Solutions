@@ -3,6 +3,7 @@ using JWT.DTO;
 using JWT.Models;
 using JWT.Repository;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,9 +23,21 @@ namespace JWT.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login([FromQuery] LoginRequestDto loginRequestDto)
+        public async Task<IActionResult> Login([FromQuery] LoginRequestDto loginRequestDto, CancellationToken cancellationToken)
         {
-            var user = await _authService.Login(loginRequestDto);
+            var user = await _authService.Login(loginRequestDto, cancellationToken);
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                // Postman: no response  as request is already cancelled
+
+                return BadRequest(new
+                {
+                    StatusCode = StatusCodes.Status499ClientClosedRequest,
+                    ErrorMessage = "Request Cancelled by Client Side",
+                    Message = "Request Cancelled"
+                });
+            }
 
             if (user == null) 
             {
@@ -42,7 +55,6 @@ namespace JWT.Controllers
                 Message = "Login Successful",
                 User = user
             });
-            
         }
 
         [HttpPost]
@@ -103,7 +115,11 @@ namespace JWT.Controllers
 
             if (!User.IsInRole("Admin"))
             {
-                return Unauthorized("No Premission"); 
+                return Unauthorized(new
+                {
+                    StatusCode = StatusCodes.Status401Unauthorized,
+                    message = "No Premission"
+                }); 
             }
 
             return Ok(tok);
