@@ -1,6 +1,9 @@
 ﻿
+using FilesUploading.Dto;
 using FilesUploading.Models;
 using FilesUploading.Repository;
+using Microsoft.AspNetCore.Http;
+using System.Net;
 
 namespace FilesUploading.Services
 {
@@ -19,15 +22,17 @@ namespace FilesUploading.Services
             _fileStorageService = fileStorageService;
         }
 
-        public async Task<int?> InitializeUpload(string fileName, long fileSize, int totalChunks)
+        public async Task<ApiResponseDto<string>> InitializeUpload(string fileName, long fileSize, int totalChunks)
         {
-            if (string.IsNullOrEmpty(fileName)) return null;
+            if (string.IsNullOrEmpty(fileName)) fileName = Path.GetRandomFileName();
             string extension = GetFileExtensions(fileName);
 
-            if (!AllowedExtensions.Contains(extension))
-            {
-                throw new Exception("Upload Only Allowed");
-            }
+            if (!AllowedExtensions.Contains(extension)) 
+                return new ApiResponseDto<string> 
+                { 
+                    Message = "Extension Not Allowed", 
+                    Success = false
+                };
 
             var file = new Models.File
             {
@@ -40,7 +45,19 @@ namespace FilesUploading.Services
             };
 
             var result = await _repository.CreateFileAsync(file);
-            return result.Id;
+
+            return result == null
+                ? new ApiResponseDto<string>
+                {
+                    Success = false,
+                    Message = "Unable to initialize upload"
+                }
+                : new ApiResponseDto<string>
+                {
+                    Success = true,
+                    Message = "Upload initialized successfully",
+                    Data = result.Id.ToString()
+                };
         }
 
         public async Task<string?> UploadChunk(int fileId, int chunkIndex, IFormFile chunk)
@@ -88,22 +105,15 @@ namespace FilesUploading.Services
 
             return file.Status;
         }
-
-        public string GetFileExtensions(string fileName)
-        {
-            var extension = Path.GetExtension(fileName).ToLowerInvariant();
-            return extension;
-        }
-
         // ---------------------------
         public async Task<string> UploadChunkV2(int fileId, int chunkIndex, IFormFile chunk)
         {
             var file = await _repository.GetFileAsync(fileId);
             if (file == null) return "File not found";
 
-            var chunkFolder = Path.Combine(Directory.GetCurrentDirectory(),"NewUploads",fileId.ToString());
+            var chunkFolder = GetPath(fileId);
 
-            if (!Directory.Exists(chunkFolder)) Directory.CreateDirectory(chunkFolder);
+            if (CheckDirectoryExist(chunkFolder)) Directory.CreateDirectory(chunkFolder);
 
             var chunkPath = Path.Combine(chunkFolder, $"{Path.GetFileNameWithoutExtension(file.FileName)}_{chunkIndex}");
 
@@ -148,9 +158,9 @@ namespace FilesUploading.Services
             var file = await _repository.GetFileAsync(fileId);
             if (file == null) return "File not found";
 
-            var chunkFolder = Path.Combine(Directory.GetCurrentDirectory(), "NewUploads", fileId.ToString());
+            var chunkFolder = GetPath(fileId);
 
-            if (!Directory.Exists(chunkFolder)) return "Chunks not found";
+            if (CheckDirectoryExist(chunkFolder)) return "Chunks not found";
 
             if (string.IsNullOrEmpty(file.FileName)) return null;
 
@@ -201,5 +211,21 @@ namespace FilesUploading.Services
 
             return "File merged successfully";
         }
+
+        public string GetPath(int fileId)
+        {
+            return Path.Combine(Directory.GetCurrentDirectory(), "NewUploads", fileId.ToString());
+        }
+
+        public bool CheckDirectoryExist(string path)
+        {
+            return !Directory.Exists(path);
+        }
+        public string GetFileExtensions(string fileName)
+        {
+            var extension = Path.GetExtension(fileName).ToLowerInvariant();
+            return extension;
+        }
+
     }
 }

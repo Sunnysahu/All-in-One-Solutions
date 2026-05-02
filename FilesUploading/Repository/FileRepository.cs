@@ -20,12 +20,13 @@ namespace FilesUploading.Repository
 
         }
 
-        public async Task<Models.File> CreateFileAsync(Models.File file)
+        public async Task<Models.File?> CreateFileAsync(Models.File file)
         {
             await _context.Files.AddAsync(file);
             int rows = await _context.SaveChangesAsync();
 
-            return file;
+            if (rows > 0) return file;
+            return null;
         }
 
         public async Task SaveChangesAsync()

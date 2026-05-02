@@ -20,12 +20,17 @@ namespace FilesUploading.Controllers
         [HttpPost("init")]
         public async Task<IActionResult> InitUpload([FromForm] string fileName, [FromForm] long fileSize, [FromForm]  int totalChunks)
         {
-            var fileId = await _services.InitializeUpload(fileName, fileSize, totalChunks);
-            return Ok(new
+            var file = await _services.InitializeUpload(fileName, fileSize, totalChunks);
+
+            return file.Success ? Ok(new
             {
                 StatusCode = StatusCodes.Status200OK,
-                Message = "Uploading Started",
-                Data = fileId
+                Message = file.Message,
+                Data = file.Data
+            }) : BadRequest(new
+            {
+                StatusCode = StatusCodes.Status400BadRequest,
+                file
             });
         }
 
