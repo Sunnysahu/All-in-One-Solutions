@@ -27,13 +27,19 @@ namespace WebApp_Identity.Pages.Account
                     new Claim("Department", "HR"),
                     new Claim("Admin", "true"),
                     new Claim("Manager", "true"),
+                    new Claim("EmploymentDate", "2026-01-01"),
 
                 };
 
                 var identity = new ClaimsIdentity(Claims, "MyCookieAuth");
                 ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
 
-                await HttpContext.SignInAsync("MyCookieAuth", claimsPrincipal);
+                var authProperties = new AuthenticationProperties
+                {
+                    IsPersistent = Credentials.RememberMe
+                };
+
+                await HttpContext.SignInAsync("MyCookieAuth", claimsPrincipal, authProperties);
 
                 return Redirect("/Index");
             }
@@ -49,7 +55,10 @@ namespace WebApp_Identity.Pages.Account
         public string UserName { get; set; } = string.Empty;
         [Required]
         [DataType(DataType.Password)]
-        public string Password { get; set; } = string.Empty;    
+        public string Password { get; set; } = string.Empty;
+
+        [Display(Name = "Remember Me")]
+        public bool RememberMe { get; set; }
 
     }
 }

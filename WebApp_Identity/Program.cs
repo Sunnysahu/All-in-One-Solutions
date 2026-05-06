@@ -1,3 +1,6 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using WebApp_Identity.Authorization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,7 +9,21 @@ builder.Services.AddRazorPages();
 builder.Services.AddAuthentication("MyCookieAuth").AddCookie("MyCookieAuth", options =>
 {
     options.Cookie.Name = "MyCookieAuth";
+    options.ExpireTimeSpan = TimeSpan.FromSeconds(200);
 
+    /*
+     If this sets on then Cookie will be restored
+     In Chrome:
+
+    Settings → “On startup”
+    If set to “Continue where you left off”
+     */
+    // This controls whether the expiration keeps getting extended.
+    /*
+     true (default):
+    Every request refreshes the expiration time
+    → user stays logged in as long as they’re active
+     */
 });
 
 builder.Services.AddAuthorization(options =>
@@ -22,8 +39,10 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy(
         "HRManagerOnly",
         policy => policy.RequireClaim("Department", "HR")
-        .RequireClaim("Manager"));
+        .RequireClaim("Manager").Requirements.Add(new HRManagerProbationRequirement(3)));
 });
+
+builder.Services.AddSingleton<IAuthorizationHandler, HRManagerProbingRequirementHandler>();
 
 var app = builder.Build();
 
