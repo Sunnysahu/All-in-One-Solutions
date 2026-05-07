@@ -29,6 +29,7 @@ namespace JWT.Services
                 Console.WriteLine("DB Query Cancelled");
                 return null;
             }
+            _context.Quer
             return await _context.Users.FirstOrDefaultAsync(x => x.Username == username && x.Password == password, cancellationToken);
 
             /*
