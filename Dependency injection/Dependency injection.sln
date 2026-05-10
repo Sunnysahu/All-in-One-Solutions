@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp_Identity", "..\WebAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pagination", "..\Pagination\Pagination.csproj", "{2200617C-A6B2-4B0B-B7FE-2454E7EEBB51}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyNetQ", "..\EasyNetQ\EasyNetQ.csproj", "{907B76F5-361C-4CF4-8D1C-90A9643F946A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,10 @@ Global
 		{2200617C-A6B2-4B0B-B7FE-2454E7EEBB51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2200617C-A6B2-4B0B-B7FE-2454E7EEBB51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2200617C-A6B2-4B0B-B7FE-2454E7EEBB51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{907B76F5-361C-4CF4-8D1C-90A9643F946A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{907B76F5-361C-4CF4-8D1C-90A9643F946A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{907B76F5-361C-4CF4-8D1C-90A9643F946A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{907B76F5-361C-4CF4-8D1C-90A9643F946A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
