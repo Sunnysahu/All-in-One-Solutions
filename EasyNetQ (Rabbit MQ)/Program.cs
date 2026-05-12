@@ -1,23 +1,33 @@
 ﻿using EasyNetQ;
-using Messages;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Publisher;
 
-var services = new ServiceCollection();
+var builder = Host.CreateApplicationBuilder(args);
 
-services.AddLogging(b => b.AddConsole());
+builder.Services.AddLogging(b => b.AddConsole());
 
-services.AddEasyNetQ("host=localhost;timeout=60").UseSystemTextJson();
+builder.Services
+    .AddEasyNetQ("host=localhost")
+    .UseSystemTextJson();
 
-using var provider = services.BuildServiceProvider();
+builder.Services.AddHostedService<OrderPublisherWorker>();
 
-var bus = provider.GetRequiredService<IBus>();
+await builder.Build().RunAsync();
 
-var input = string.Empty;
 
-Console.WriteLine("Enter a Message. 'Quit' to quit. ");
-while ((input = Console.ReadLine()) != "Quit")
-{
-    await bus.PubSub.PublishAsync(new Textmessage { Text = input});
-    Console.WriteLine("Message Published");
-}
+//await bus.PubSub.SubscribeAsync<Textmessage>(
+//    "text_subscriber", 
+//    async msg =>
+//    {
+//        Console.WriteLine(msg.Text);
+//});
+//var input = string.Empty;
+
+//Console.WriteLine("Enter a Message. 'Quit' to quit. ");
+//while ((input = Console.ReadLine()) != "Quit")
+//{
+//    await bus.PubSub.PublishAsync(new Textmessage { Text = input });
+//    Console.WriteLine("Message Published");
+//}
