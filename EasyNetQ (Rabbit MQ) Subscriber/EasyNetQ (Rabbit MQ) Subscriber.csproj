@@ -10,11 +10,13 @@
 
   <ItemGroup>
     <PackageReference Include="EasyNetQ" Version="8.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EasyNetQ (Rabbit MQ)\EasyNetQ (Rabbit MQ) Publisher.csproj" />
     <ProjectReference Include="..\Messages\Messages.csproj" />
   </ItemGroup>
 

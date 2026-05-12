@@ -1,23 +1,35 @@
 ﻿using EasyNetQ;
-using Messages;
+using EasyNetQ__Rabbit_MQ__Subscriber;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System.ComponentModel;
 
-var services = new ServiceCollection();
+var builder = Host.CreateApplicationBuilder(args);
 
-services.AddLogging(b => b.AddConsole());
+builder.Services.AddLogging(b => b.AddConsole());
 
-services.AddEasyNetQ("host=localhost;timeout=60").UseSystemTextJson();
+builder.Services
+    .AddEasyNetQ("host=localhost")
+    .UseSystemTextJson();
 
-using var provider = services.BuildServiceProvider();
+builder.Services.AddHostedService<ManualSubscriberWorker>();
 
-var bus = provider.GetRequiredService<IBus>();
+await builder.Build().RunAsync();
 
-await bus.PubSub.SubscribeAsync<Textmessage>("Message", msg =>
-{
-    Console.WriteLine("Got Message : " + msg.Text);
-});
+//var services = new ServiceCollection();
 
-Console.WriteLine("Listening for message. Hit <return> to quit.");
-Console.ReadLine();
+//services.AddLogging(b => b.AddConsole());
+
+//services.AddEasyNetQ("host=localhost;timeout=60").UseSystemTextJson();
+
+//using var provider = services.BuildServiceProvider();
+
+//var bus = provider.GetRequiredService<IBus>();
+
+//await bus.PubSub.SubscribeAsync<Textmessage>("Message", msg =>
+//{
+//    Console.WriteLine("Got Message : " + msg.Text);
+//});
+
+//Console.WriteLine("Listening for message. Hit <return> to quit.");
+//Console.ReadLine();
