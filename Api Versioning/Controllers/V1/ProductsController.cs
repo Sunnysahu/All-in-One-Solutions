@@ -3,19 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api_Versioning.Controllers.V1
 {
+
     [ApiController]
-    [ApiVersion("2.0")]
+    [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class ProductsController : ControllerBase
     {
-        [HttpGet]
+        [HttpGet("GelAll")]
         public IActionResult Get()
         {
             return Ok(new
             {
-                Version = "V2",
-                Data = "New Response",
-                ExtraField = "Added in V2"
+                Version = "V1",
+                Data = "Old Response"
             });
         }
     }

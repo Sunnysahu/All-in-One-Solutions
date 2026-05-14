@@ -1,5 +1,6 @@
 using Asp.Versioning;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,15 +64,29 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        options.SwaggerEndpoint(
-            "/swagger/v1/swagger.json",
-            "My API V1");
-
-        options.SwaggerEndpoint(
-            "/swagger/v2/swagger.json",
-            "My API V2");
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+        options.SwaggerEndpoint("/swagger/v2/swagger.json", "My API V2");
     });
 }
+
+app.UseStatusCodePages(async context =>
+{
+    var response = context.HttpContext.Response;
+
+    if (response.StatusCode == 404)
+    {
+        response.ContentType = "application/json";
+
+        await response.WriteAsJsonAsync(new
+        {
+            Status = StatusCodes.Status404NotFound,
+            Message = "API version is invalid or unsupported",
+            SupportedVersions = new[] { "1.0", "2.0" }
+        });
+    }
+});
+
+
 
 app.UseHttpsRedirection();
 
