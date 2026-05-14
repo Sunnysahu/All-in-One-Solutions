@@ -40,7 +40,7 @@ builder.Services.AddApiVersioning(options =>
     new UrlSegmentApiVersionReader(),
     new QueryStringApiVersionReader("api-version"),
     new HeaderApiVersionReader("x-api-version")
-);
+    );
      */
 }).AddApiExplorer(options =>
 {
