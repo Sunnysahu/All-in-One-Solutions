@@ -38,8 +38,7 @@ namespace Pagination.Controllers
             //{
             //    Data = query,
             //    Message = "Success"
-            //});
-
+            //})
          
             // Typical EF Core Pattern --> query stays flexible --> SQL stays optimized --> execution happens only once
 
@@ -79,6 +78,7 @@ namespace Pagination.Controllers
             //var t2 = context2.EmployeeModels.CountAsync();
 
             //await Task.WhenAll(t1, t2);
+
             // To Do this 
             await Task.WhenAll(employees, countTask, salaryTask);
 
@@ -97,7 +97,7 @@ namespace Pagination.Controllers
             //IQueryable<EmployeeModel> query = _context.EmployeeModels.AsNoTracking();
 
             //if (query.Count() < lastId || lastId < 0 || lastId is null) return NotFound(new { Message = "No Data Ahead or lastId is Invalid" });
-
+                
             //if (lastId.HasValue) query = query.Where(x => x.Id > lastId.Value);
 
             //var employees = await query.OrderBy(x => x.Id).Take(pageSize).ToListAsync();
