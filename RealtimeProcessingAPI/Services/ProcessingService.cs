@@ -19,7 +19,7 @@ namespace RealtimeProcessingAPI.Services
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                await Task.Delay(2000, cancellationToken);
+                await Task.Delay(1000, cancellationToken);
 
                 var log = new ProcessingLog
                 {

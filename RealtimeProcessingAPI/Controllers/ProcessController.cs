@@ -17,7 +17,7 @@ namespace RealtimeProcessingAPI.Controllers
         [HttpGet("stream")]
         public async Task Stream(CancellationToken cancellationToken)
         {
-            Response.StatusCode = 200;
+            Response.StatusCode = StatusCodes.Status200OK;
 
             Response.ContentType = "text/event-stream";
 
