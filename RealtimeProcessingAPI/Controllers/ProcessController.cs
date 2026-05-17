@@ -31,8 +31,7 @@ namespace RealtimeProcessingAPI.Controllers
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                var json =
-                    JsonSerializer.Serialize(item);
+                var json = JsonSerializer.Serialize(item);
 
                 await Response.WriteAsync($"data: {json}\n\n", cancellationToken);
 
