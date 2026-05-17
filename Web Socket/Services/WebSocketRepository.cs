@@ -68,7 +68,7 @@ namespace Web_Socket.Services
                         cancellationToken
                     );
                 }
-                webSocket.Dispose();
+                webSocket.Dispose(); // Release resources associated with the WebSocket connection.
             }
 
         }
