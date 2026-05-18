@@ -123,7 +123,7 @@ namespace Web_Socket.Services
                         cancellationToken
                         );
 
-                        await Task.Delay(500, cancellationToken);
+                        await Task.Delay(1000, cancellationToken);
                     }
 
                     await SendAsync(

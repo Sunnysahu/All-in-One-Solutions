@@ -54,7 +54,7 @@ namespace Web_Socket.Controllers
 
                 WebSocket webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync(webSocketOptions);
 
-                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(50));
 
                 Console.WriteLine("Connection Successful");
 
