@@ -46,6 +46,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealtimeProcessingAPI", "..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web Socket", "..\Web Socket\Web Socket.csproj", "{BB5292B8-F55E-423E-B3F5-16380B06A257}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web Hook", "..\Web Hook\Web Hook.csproj", "{89D78E61-F628-4719-A4D4-C745243460A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -128,6 +130,10 @@ Global
 		{BB5292B8-F55E-423E-B3F5-16380B06A257}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB5292B8-F55E-423E-B3F5-16380B06A257}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB5292B8-F55E-423E-B3F5-16380B06A257}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89D78E61-F628-4719-A4D4-C745243460A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89D78E61-F628-4719-A4D4-C745243460A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89D78E61-F628-4719-A4D4-C745243460A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89D78E61-F628-4719-A4D4-C745243460A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
