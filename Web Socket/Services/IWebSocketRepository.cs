@@ -5,5 +5,6 @@ namespace Web_Socket.Services
     public interface IWebSocketRepository
     {
         Task HandleWebSocketAsync(WebSocket webSocket, CancellationToken cancellationToken);
+        Task HandleAsync(WebSocket webSocket, CancellationToken cancellationToken);
     }
 }

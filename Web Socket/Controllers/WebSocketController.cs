@@ -24,16 +24,41 @@ namespace Web_Socket.Controllers
             {
                 var webSocketOptions = new WebSocketAcceptContext
                 {
-                    KeepAliveInterval = TimeSpan.FromSeconds(30),
+                    KeepAliveInterval = TimeSpan.FromSeconds(10),
                     SubProtocol = "chat"
                 };
 
                 
                 WebSocket webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync(webSocketOptions);
 
-                using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
 
                 await _repository.HandleWebSocketAsync(webSocket, cts.Token);
+            }
+            else
+            {
+                HttpContext.Response.StatusCode = 400;
+            }
+        }
+
+        [HttpGet("connectnew")]
+        public async Task Connectnew()
+        {
+            if (HttpContext.WebSockets.IsWebSocketRequest) // Did client request WebSocket upgrade?
+            {
+                var webSocketOptions = new WebSocketAcceptContext
+                {
+                    KeepAliveInterval = TimeSpan.FromSeconds(10),
+                    SubProtocol = "chat"
+                };
+
+                WebSocket webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync(webSocketOptions);
+
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+
+                Console.WriteLine("Connection Successful");
+
+                await _repository.HandleAsync(webSocket, cts.Token);
             }
             else
             {

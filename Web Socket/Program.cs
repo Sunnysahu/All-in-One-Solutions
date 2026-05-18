@@ -9,7 +9,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IWebSocketRepository, WebSocketRepository>();
+//builder.Services.AddScoped<IWebSocketRepository, WebSocketRepository>();
+builder.Services.AddSingleton<IWebSocketRepository, WebSocketRepository>();
+
 
 var app = builder.Build();
 
