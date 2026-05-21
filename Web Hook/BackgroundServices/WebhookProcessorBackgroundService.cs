@@ -28,7 +28,7 @@ namespace Web_Hook.BackgroundServices
                     var webhookEvent = await _queue.DequeueAsync(stoppingToken);
 
                     _logger.LogInformation("Webhook dequeued. EventId: {EventId}", webhookEvent.EventId);
-                    //await Task.Delay(2000, stoppingToken);
+                    await Task.Delay(2000, stoppingToken);
                     using var scope = _serviceScopeFactory.CreateScope();
 
                     var webhookService = scope.ServiceProvider.GetRequiredService<IWebhookService>();

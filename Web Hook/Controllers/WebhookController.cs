@@ -43,6 +43,7 @@ namespace Web_Hook.Controllers
 
             var eventId = Request.Headers["X-Webhook-Id"].ToString();
 
+            Console.WriteLine(eventId);
             var isDuplicate = await _webhookService.IsDuplicateAsync(eventId);
 
             if (isDuplicate)
