@@ -378,3 +378,6 @@ curl --location 'https://localhost:7034/api/Webhook/razorpay' \
     }
 }'
 ```
+
+
+### To Run Test in Postman, Add API Endpoint to Collections then Right Click then Run, add No. of Iterations then See
