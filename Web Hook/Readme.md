@@ -16,13 +16,13 @@ POST https://localhost:7034/api/Webhook/razorpay
 
 Use:
 
-[FreeFormatter HMAC Generator](https://www.freeformatter.com/hmac-generator.html?utm_source=chatgpt.com#before-output)
+https://www.freeformatter.com/hmac-generator.html#before-output
 
 ## Configuration
 
-| Field            | Value    |
-| ---------------- | -------- |
-| Secret Key       | `Sunny`  |
+| Field | Value |
+|---|---|
+| Secret Key | `Sunny` |
 | Digest Algorithm | `SHA256` |
 
 ---
@@ -53,9 +53,9 @@ Use this exact JSON payload:
 
 # Required Headers
 
-| Header                 | Value                   |
-| ---------------------- | ----------------------- |
-| `X-Webhook-Id`         | `evt_1001`              |
+| Header | Value |
+|---|---|
+| `X-Webhook-Id` | `evt_1001` |
 | `X-Razorpay-Signature` | `<Generated HMAC Hash>` |
 
 Example:
@@ -76,10 +76,10 @@ X-Razorpay-Signature: ab740b0f98d602192bae42f96aa6fe6b502a08c8068d0f962bb09ffe58
 
 Verify:
 
-* Signature validation
-* Database insert
-* Queue processing
-* Background worker execution
+- Signature validation
+- Database insert
+- Queue processing
+- Background worker execution
 
 ---
 
@@ -166,9 +166,9 @@ Real payment providers retry webhook delivery multiple times.
 
 Without duplicate protection:
 
-* Customer may be charged twice
-* Wallet balance may be credited twice
-* Orders may be shipped multiple times
+- Customer may be charged twice
+- Wallet balance may be credited twice
+- Orders may be shipped multiple times
 
 This is a critical production safety check.
 
@@ -184,9 +184,9 @@ X-Webhook-Id: evt_1001
 
 Use the exact same:
 
-* Payload
-* Signature
-* Event ID
+- Payload
+- Signature
+- Event ID
 
 ---
 
@@ -326,32 +326,32 @@ SELECT * FROM ProcessedWebhooks;
 
 # Expected Database Flow
 
-| Table               | Purpose                               |
-| ------------------- | ------------------------------------- |
-| `Payments`          | Stores successful payment records     |
-| `WebhookEvents`     | Stores incoming webhook payloads      |
+| Table | Purpose |
+|---|---|
+| `Payments` | Stores successful payment records |
+| `WebhookEvents` | Stores incoming webhook payloads |
 | `ProcessedWebhooks` | Prevents duplicate webhook processing |
 
 ---
 
 # Quick Testing Checklist
 
-| Test Case                      | Expected Result    |
-| ------------------------------ | ------------------ |
-| Valid webhook                  | `200 OK`           |
-| Invalid signature              | `401 Unauthorized` |
-| Missing signature              | `401 Unauthorized` |
-| Duplicate webhook              | Ignored internally |
-| Payments count after duplicate | `1` row only       |
+| Test Case | Expected Result |
+|---|---|
+| Valid webhook | `200 OK` |
+| Invalid signature | `401 Unauthorized` |
+| Missing signature | `401 Unauthorized` |
+| Duplicate webhook | Ignored internally |
+| Payments count after duplicate | `1` row only |
 
 ---
 
 # Recommended Testing Tools
 
-* Postman
-* Bruno
-* cURL
-* Swagger
+- Postman
+- Bruno
+- cURL
+- Swagger
 
 ---
 
@@ -379,5 +379,58 @@ curl --location 'https://localhost:7034/api/Webhook/razorpay' \
 }'
 ```
 
+---
 
-### To Run Test in Postman, Add API Endpoint to Collections then Right Click then Run, add No. of Iterations then See
+# Postman Collection Runner Testing
+
+To run automated tests in Postman:
+
+1. Add the API request to a Collection
+2. Right-click the Collection
+3. Click **Run Collection**
+4. Set the number of iterations
+5. Start the run
+
+---
+
+## Important
+
+Enable the **HMAC** option and keep it always enabled during testing.
+
+---
+
+# Postman Pre-request Script
+
+Paste this into the **Scripts** tab.
+
+```javascript
+const randomNumber = Math.floor(Math.random() * 100000);
+
+pm.variables.set("eventId", `evt_${randomNumber}`);
+pm.variables.set("paymentId", `pay_${randomNumber}`);
+pm.variables.set("orderId", `order_${randomNumber}`);
+```
+
+---
+
+# Postman Raw JSON Body
+
+Paste this into **Body → raw → JSON**
+
+```json
+{
+    "event": "payment.captured",
+    "account_id": "acc_001",
+    "payload": {
+        "payment": {
+            "entity": {
+                "id": "{{paymentId}}",
+                "order_id": "{{orderId}}",
+                "amount": 5000,
+                "currency": "INR",
+                "status": "captured"
+            }
+        }
+    }
+}
+```

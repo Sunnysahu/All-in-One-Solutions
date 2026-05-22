@@ -46,7 +46,8 @@ namespace Web_Hook.Services
                     Status = paymentEntity.Status,
                     CreatedAt = DateTime.Now
                 };
-                await Task.Delay(2000);
+                
+                //await Task.Delay(2000);
                 _dbContext.payment.Add(payment);
                 _dbContext.ProcessedWebhooks.Add(new ProcessedWebhook
                 {
@@ -54,13 +55,13 @@ namespace Web_Hook.Services
                     ProcessedAt = DateTime.Now
                 });
 
-                await Task.Delay(2000);
+                //await Task.Delay(2000);
                 _dbContext.WebhookEvents.Attach(webhookEvent);
 
                 webhookEvent.IsProcessed = true;
                 webhookEvent.ProcessedAt = DateTime.Now;
 
-                await Task.Delay(2000);
+                //await Task.Delay(2000);
                 await _dbContext.SaveChangesAsync();
 
                 _logger.LogInformation("Webhook processed successfully. EventId: {EventId}",
