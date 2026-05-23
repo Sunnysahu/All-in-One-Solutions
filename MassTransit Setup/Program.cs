@@ -17,6 +17,10 @@ builder.Services.AddMassTransit(busConfigurator =>
     //busConfigurator.AddConsumer<CurrentTimeConsumerV2>();
     busConfigurator.AddConsumers(typeof(Program).Assembly);
     busConfigurator.UsingInMemory((context, config) => config.ConfigureEndpoints(context));
+
+    busConfigurator.UsingRabbitMq();
+    busConfigurator.UsingAzureServiceBus();
+    busConfigurator.UsingAmazonSqs();
 });
 
 builder.Services.AddHostedService<MessagePublisher>();
