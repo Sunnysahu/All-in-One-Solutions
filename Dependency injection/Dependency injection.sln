@@ -50,6 +50,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web Hook", "..\Web Hook\Web
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task", "..\Task\Task.csproj", "{8A16C539-A6AB-4F61-8503-B477738A8C42}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransit Setup", "..\MassTransit Setup\MassTransit Setup.csproj", "{2EED679D-D130-4147-91E2-03031CEA700F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -140,6 +142,10 @@ Global
 		{8A16C539-A6AB-4F61-8503-B477738A8C42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A16C539-A6AB-4F61-8503-B477738A8C42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A16C539-A6AB-4F61-8503-B477738A8C42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EED679D-D130-4147-91E2-03031CEA700F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EED679D-D130-4147-91E2-03031CEA700F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EED679D-D130-4147-91E2-03031CEA700F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EED679D-D130-4147-91E2-03031CEA700F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
