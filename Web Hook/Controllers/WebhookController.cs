@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Hangfire;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Web_Hook.Models;
 using Web_Hook.Services.Interfaces;
@@ -68,6 +69,7 @@ namespace Web_Hook.Controllers
 
             await _webhookService.SaveWebhookEventAsync(webhookEvent);
             await _queue.QueueAsync(webhookEvent);
+            //BackgroundJob.Enqueue<IWebhookService>(x => x.ProcessWebhookAsync(webhookEvent));
 
             _logger.LogInformation("Webhook Received and Queued. EventId: {EventId}", eventId);
 

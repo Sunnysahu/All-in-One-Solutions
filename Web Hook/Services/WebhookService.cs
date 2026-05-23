@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using Web_Hook.Data;
 using Web_Hook.DTOs;
@@ -33,6 +34,9 @@ namespace Web_Hook.Services
         {
             try
             {
+                // Only Uncomment this code if needed to see the Increasing pool connections
+                // await using var transaction = await _dbContext.Database.BeginTransactionAsync();
+
                 var dto = JsonSerializer.Deserialize <RazorpayWebhookDto> (webhookEvent.Payload);
 
                 var paymentEntity = dto!.Payload.Payment.Entity;
@@ -47,7 +51,7 @@ namespace Web_Hook.Services
                     CreatedAt = DateTime.Now
                 };
                 
-                //await Task.Delay(2000);
+                await Task.Delay(2000);
                 _dbContext.payment.Add(payment);
                 _dbContext.ProcessedWebhooks.Add(new ProcessedWebhook
                 {
@@ -61,18 +65,39 @@ namespace Web_Hook.Services
                 webhookEvent.IsProcessed = true;
                 webhookEvent.ProcessedAt = DateTime.Now;
 
+                // Only Uncomment this code if needed to see the Increasing pool connections
+
+                //await using var transactions = await _dbContext.Database.BeginTransactionAsync();
+
+                //await _dbContext.Database.ExecuteSqlRawAsync(
+                //    "WAITFOR DELAY '00:00:30'");
+
                 //await Task.Delay(2000);
                 await _dbContext.SaveChangesAsync();
 
                 _logger.LogInformation("Webhook processed successfully. EventId: {EventId}",
                 webhookEvent.EventId);
             }
+            catch (DbUpdateException ex)
+            {
+                // SQL UNIQUE constraint violation
+                if (ex.InnerException is SqlException sqlEx && (sqlEx.Number == 2627 || sqlEx.Number == 2601))
+                {
+                    _logger.LogWarning("Duplicate webhook ignored: {EventId}", webhookEvent.EventId);
+
+                    return;
+                }
+
+                throw;
+            }
             catch (Exception ex)
             {
                 webhookEvent.RetryCount++;
 
                 await _dbContext.SaveChangesAsync();
+
                 _logger.LogError(ex,"Webhook processing failed. EventId: {EventId}",webhookEvent.EventId);
+
                 throw;
             }
             finally

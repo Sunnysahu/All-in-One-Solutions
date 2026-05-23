@@ -24,7 +24,7 @@ namespace Web_Hook.Services
             var generatedSignature = Convert.ToHexString(hash).ToLower();
 
             return true;
-            return generatedSignature == incomingSignature.ToLower();
+            //return generatedSignature == incomingSignature.ToLower();
         }
     }
 }

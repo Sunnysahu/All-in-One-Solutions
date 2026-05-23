@@ -1,4 +1,5 @@
-﻿using System.Threading.Channels;
+﻿using Hangfire;
+using System.Threading.Channels;
 using Web_Hook.Models;
 using Web_Hook.Services.Interfaces;
 
@@ -19,7 +20,12 @@ namespace Web_Hook.Services
         }
         public async ValueTask QueueAsync(WebhookEvent webhookEvent)
         {
-            await _channel.Writer.WriteAsync(webhookEvent);
+            
+            BackgroundJob.Enqueue<IWebhookService>(x => x.ProcessWebhookAsync(webhookEvent)); // Comment this and Uncomment the lower lines to use BackGourn Service
+
+            //BackgroundJob.Enqueue(() => Console.WriteLine("Webhook Processing"));
+            //await _channel.Writer.WriteAsync(webhookEvent);
+            //await Task.Delay(1000);
         }
 
         public async ValueTask<WebhookEvent> DequeueAsync(CancellationToken cancellationToken)

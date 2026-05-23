@@ -1,3 +1,4 @@
+using Hangfire;
 using Microsoft.EntityFrameworkCore;
 using Web_Hook.BackgroundServices;
 using Web_Hook.Data;
@@ -18,6 +19,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddHangfire(config => config.UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddHangfireServer(options =>
+{
+    //options.WorkerCount = 50;
+});
+
 builder.Services.AddScoped<IWebhookService, WebhookService>();
 builder.Services.AddSingleton<IWebhookQueue, WebhookQueue>();
 builder.Services.AddScoped<ISignatureService, SignatureService>();
@@ -31,6 +39,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseHangfireDashboard();
 
 app.UseHttpsRedirection();
 
