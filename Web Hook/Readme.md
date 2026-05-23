@@ -788,3 +788,5 @@ Then you stop the server.
 - Workers stop
 - Remaining jobs stay in SQL
 - Jobs resume automatically when server starts again
+
+Open this URL : [Hangfire Dashboard](https://localhost:7034/hangfire/) or `https://localhost:7034/hangfire/`
