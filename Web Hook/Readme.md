@@ -434,3 +434,357 @@ Paste this into **Body → raw → JSON**
     }
 }
 ```
+
+------------------------------
+
+# How to Make Multiple Workers in .NET BackgroundService
+
+## Simplest Production-Style Approach
+
+Create multiple tasks inside `ExecuteAsync()`.
+
+```csharp
+protected override async Task ExecuteAsync(
+    CancellationToken stoppingToken)
+{
+    var workers = new List<Task>();
+
+    for (int i = 1; i <= 5; i++)
+    {
+        int workerId = i;
+
+        workers.Add(Task.Run(async () =>
+        {
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                try
+                {
+                    _logger.LogInformation(
+                        "Worker {WorkerId} waiting...",
+                        workerId);
+
+                    var webhookEvent =
+                        await _queue.DequeueAsync(stoppingToken);
+
+                    _logger.LogInformation(
+                        "Worker {WorkerId} picked EventId: {EventId}",
+                        workerId,
+                        webhookEvent.EventId);
+
+                    await Task.Delay(10000);
+
+                    using var scope =
+                        _serviceScopeFactory.CreateScope();
+
+                    var webhookService =
+                        scope.ServiceProvider
+                            .GetRequiredService<IWebhookService>();
+
+                    await webhookService
+                        .ProcessWebhookAsync(webhookEvent);
+
+                    _logger.LogInformation(
+                        "Worker {WorkerId} completed EventId: {EventId}",
+                        workerId,
+                        webhookEvent.EventId);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex,
+                        "Worker failed");
+                }
+            }
+        }, stoppingToken));
+    }
+
+    await Task.WhenAll(workers);
+}
+```
+
+---
+
+# What This Does
+
+Creates:
+
+- Worker 1
+- Worker 2
+- Worker 3
+- Worker 4
+- Worker 5
+
+All listening to the **same queue**.
+
+---
+
+# How `Channel<T>` Behaves
+
+Suppose the queue contains:
+
+```text
+Event1
+Event2
+Event3
+Event4
+Event5
+```
+
+Workers automatically compete.
+
+Example:
+
+```text
+Worker1 → Event1
+Worker2 → Event2
+Worker3 → Event3
+Worker4 → Event4
+Worker5 → Event5
+```
+
+## Important
+
+Each message is picked **ONLY ONCE**.
+
+`Channel<T>` safely distributes messages across workers.
+
+This is called:
+
+## Producer-Consumer Pattern
+
+---
+
+# What You Will Observe
+
+## Before
+
+```text
+10 requests
+10 sec delay
+100 sec total
+```
+
+## Now with 5 Workers
+
+```text
+roughly 20 sec total
+```
+
+Because:
+
+- 5 events processed simultaneously
+- parallel processing occurs
+
+---
+
+# Very Important Production Concept
+
+Each worker creates its own scope:
+
+```csharp
+using var scope =
+    _serviceScopeFactory.CreateScope();
+```
+
+This is extremely important because:
+
+- each worker gets a separate `DbContext`
+- `DbContext` is NOT thread-safe
+
+## NEVER SHARE SAME DbContext Across Workers
+
+### Bad
+
+Multiple threads using the same `DbContext`.
+
+Can cause:
+
+- crashes
+- race conditions
+- corrupted tracking
+
+---
+
+# Real Enterprise Concept
+
+This is called:
+
+## Concurrent Consumers
+
+Used in:
+
+- RabbitMQ consumers
+- Kafka consumers
+- Azure Service Bus processors
+- Hangfire workers
+
+---
+
+# How Many Workers Should You Use?
+
+Depends on:
+
+- CPU
+- DB capacity
+- external API rate limits
+- memory
+- workload type
+
+## Common Production Numbers
+
+Webhook systems often use:
+
+- 5
+- 10
+- 20
+- 50
+
+workers.
+
+---
+
+# Important Difference
+
+## More Workers != More Speed Always
+
+Too many workers can:
+
+- overload DB
+- exhaust connections
+- increase contention
+- create deadlocks
+
+Real systems tune worker count carefully.
+
+---
+
+# What You Should Test Now
+
+Send:
+
+```text
+10 requests
+with 10 sec delay
+```
+
+Observe logs:
+
+```text
+Worker 1 picked evt_1001
+Worker 2 picked evt_1002
+Worker 3 picked evt_1003
+```
+
+simultaneously.
+
+This proves:
+
+- multiple consumers
+- parallel processing
+- concurrent queue handling
+
+are working correctly.
+
+---
+
+# Important DbContext Clarification
+
+`DbContext` is still shared **within each worker**, but NOT across workers.
+
+So add this line:
+
+```csharp
+var webhookService =
+    scope.ServiceProvider
+        .GetRequiredService<IWebhookService>();
+```
+
+together with:
+
+```csharp
+using var scope =
+    _serviceScopeFactory.CreateScope();
+```
+
+This creates:
+
+- separate `DbContext`
+- separate scoped services
+- separate EF tracking
+
+per worker.
+
+That is the correct enterprise-safe pattern.
+
+---
+
+# Why?
+
+Because:
+
+## DbContext is NOT thread-safe
+
+Internally EF Core has:
+
+- change tracker
+- entity states
+- DB connection usage
+
+Multiple threads modifying the same `DbContext` can corrupt state.
+
+Example:
+
+```csharp
+private readonly ApplicationDbContext _dbContext;
+```
+
+used by:
+
+- Worker1
+- Worker2
+- Worker3
+
+simultaneously.
+
+Can cause:
+
+- random exceptions
+- wrong updates
+- tracking corruption
+- duplicate inserts
+
+---
+
+# Hangfire Notes
+
+Install these packages for GUI-based background job status and logs:
+
+```text
+Hangfire
+Hangfire.SqlServer
+```
+
+## Important
+
+Hangfire handles dequeue internally.
+
+It also stores jobs in SQL Server.
+
+---
+
+# What Happens Exactly
+
+Suppose:
+
+```text
+100 jobs queued
+20 processed
+80 remaining
+```
+
+Then you stop the server.
+
+## Result
+
+- Workers stop
+- Remaining jobs stay in SQL
+- Jobs resume automatically when server starts again
