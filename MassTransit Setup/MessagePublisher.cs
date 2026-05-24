@@ -3,9 +3,8 @@ using MassTransit_Setup.Models;
 
 namespace MassTransit_Setup
 {
-    public class MessagePublisher(IBus bus) : BackgroundService
+    public class MessagePublisher(IBus bus, ILogger<OrderCreatedEvent> logger) : BackgroundService
     {
-
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
@@ -14,6 +13,8 @@ namespace MassTransit_Setup
                 {
                     Value = $"The Current time is {DateTime.Now}"
                 }, stoppingToken);
+
+                logger.LogWarning("Message Published");
 
                 await Task.Delay(1000, stoppingToken);
             }
