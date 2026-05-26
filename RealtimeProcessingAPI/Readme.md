@@ -1,4 +1,48 @@
-﻿## Setup Instructions
+﻿What's the Use ?
+
+# Real-Time Processing API
+
+This project is a small ASP.NET Core backend service designed to handle long-running tasks while providing live progress updates to clients.
+
+## Purpose
+
+The API:
+
+- Processes tasks step-by-step
+- Saves processing logs to a database
+- Streams real-time progress updates to the frontend
+- Supports task cancellation
+
+## Example Workflow
+
+```text
+Starting Process...
+Validating Data...
+Processing Records...
+Saving To Database...
+Completed
+```
+
+## Common Use Cases
+
+- File uploads
+- Data imports
+- Batch processing
+- Report generation
+- Background jobs
+- Real-time dashboards
+
+## Technologies & Concepts Used
+
+- ASP.NET Core Web API
+- Async Programming (`IAsyncEnumerable`)
+- Repository Pattern
+- Dependency Injection
+- DTOs and Entities
+- Cancellation Tokens
+- Real-time progress streaming
+
+## Setup Instructions
 
 ### 1. Install Required Packages
 

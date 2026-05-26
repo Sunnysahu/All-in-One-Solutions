@@ -1,8 +1,5 @@
 ﻿using RealtimeProcessingAPI.DTOs;
-using RealtimeProcessingAPI.Entities;
 using RealtimeProcessingAPI.Interfaces;
-using ProcessingLog = RealtimeProcessingAPI.Entities.ProcessingLog;
-
 namespace RealtimeProcessingAPI.Services
 {
     public class ProcessingService : IProcessingService
@@ -21,7 +18,7 @@ namespace RealtimeProcessingAPI.Services
 
                 await Task.Delay(1000, cancellationToken);
 
-                var log = new ProcessingLog
+                var log = new Entities.ProcessingLog
                 {
                     Message = steps[i],
                     Status = "Running",

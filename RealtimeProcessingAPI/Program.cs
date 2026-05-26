@@ -3,7 +3,6 @@ using RealtimeProcessingAPI.Data;
 using RealtimeProcessingAPI.Interfaces;
 using RealtimeProcessingAPI.Repositories;
 using RealtimeProcessingAPI.Services;
-using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
