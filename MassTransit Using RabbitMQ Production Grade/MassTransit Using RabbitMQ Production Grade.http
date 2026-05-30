@@ -1,6 +1,0 @@
-@MassTransit_Using_RabbitMQ_Production_Grade_HostAddress = http://localhost:5140
-
-GET {{MassTransit_Using_RabbitMQ_Production_Grade_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
