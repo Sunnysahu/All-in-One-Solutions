@@ -54,6 +54,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransit Setup", "..\Mas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransit Using RabbitMQ", "..\MassTransit Using RabbitMQ\MassTransit Using RabbitMQ.csproj", "{0D85A00C-1A36-430D-AA4F-DC48E06DCC4A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransit - OrderManagementSystem (Custom OutBox)", "..\MassTransit - OrderManagementSystem (Custom OutBox)\MassTransit - OrderManagementSystem (Custom OutBox).csproj", "{E2E8BBC4-80A1-4C99-BCB8-04626966E295}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -152,6 +154,10 @@ Global
 		{0D85A00C-1A36-430D-AA4F-DC48E06DCC4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D85A00C-1A36-430D-AA4F-DC48E06DCC4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D85A00C-1A36-430D-AA4F-DC48E06DCC4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2E8BBC4-80A1-4C99-BCB8-04626966E295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2E8BBC4-80A1-4C99-BCB8-04626966E295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2E8BBC4-80A1-4C99-BCB8-04626966E295}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2E8BBC4-80A1-4C99-BCB8-04626966E295}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
