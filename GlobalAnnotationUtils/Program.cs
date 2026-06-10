@@ -1,3 +1,5 @@
+using GlobalAnnotationUtils.Repositories;
+using GlobalAnnotationUtils.Services;
 using Microsoft.AspNetCore.Http.Timeouts;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +30,11 @@ builder.Services.AddSwaggerGen();
 
 // Minimal configuration for Timeouts without using policies
 builder.Services.AddRequestTimeouts();
+
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+
 
 var app = builder.Build();
 
