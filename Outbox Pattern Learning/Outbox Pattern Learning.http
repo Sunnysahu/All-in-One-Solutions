@@ -1,0 +1,6 @@
+@Outbox_Pattern_Learning_HostAddress = http://localhost:5080
+
+GET {{Outbox_Pattern_Learning_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
