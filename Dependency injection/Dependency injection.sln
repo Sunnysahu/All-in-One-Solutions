@@ -58,8 +58,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransit Using RabbitMQ 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalAnnotationUtils", "..\GlobalAnnotationUtils\GlobalAnnotationUtils.csproj", "{9F4F6C42-168E-452B-80D1-00808D7751F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outbox Pattern Learning", "..\Outbox Pattern Learning\Outbox Pattern Learning.csproj", "{6F5FD68A-DCA9-4850-8B34-9753DCB714EE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -166,10 +164,6 @@ Global
 		{9F4F6C42-168E-452B-80D1-00808D7751F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F4F6C42-168E-452B-80D1-00808D7751F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F4F6C42-168E-452B-80D1-00808D7751F6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F5FD68A-DCA9-4850-8B34-9753DCB714EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F5FD68A-DCA9-4850-8B34-9753DCB714EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F5FD68A-DCA9-4850-8B34-9753DCB714EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F5FD68A-DCA9-4850-8B34-9753DCB714EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
