@@ -42,11 +42,10 @@ namespace Outbox_Pattern_Learning.Services
                 var order = new Order
                 {
                     Id = Guid.NewGuid(),
-                    OrderNumber = $"ORD-{DateTime.UtcNow:yyyyMMddHHmmssfff}",
                     CustomerName = request.CustomerName,
                     ProductName = request.ProductName,
                     Quantity = request.Quantity,
-                    TotalAmount = request.Quantity * request.UnitPrice,
+                    Price = request.Price,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow
                 };
