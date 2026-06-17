@@ -1,0 +1,20 @@
+﻿CREATE DATABASE RedisDemoDb
+
+USE RedisDemoDb;
+GO
+
+
+CREATE TABLE Users (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Username NVARCHAR(100) NOT NULL UNIQUE,
+    Email NVARCHAR(200) NOT NULL UNIQUE,
+    Password NVARCHAR(200) NOT NULL,
+    PasswordHash NVARCHAR(MAX) NOT NULL,
+    CreatedAt DATETIME2 DEFAULT GETUTCDATE()
+);
+
+
+SELECT * FROM Users;
+delete from Users where id = 1;
+
+DROP TABLE Users;
