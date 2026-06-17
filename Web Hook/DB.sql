@@ -1,0 +1,60 @@
+﻿USE master;
+GO
+
+ALTER DATABASE WebhookDemo
+SET SINGLE_USER
+WITH ROLLBACK IMMEDIATE;
+GO
+
+DROP DATABASE WebhookDemo;
+GO
+
+CREATE DATABASE WebhookDemo;
+GO
+
+USE WebhookDemo;
+GO
+
+CREATE TABLE Payments
+(
+    Id INT PRIMARY KEY IDENTITY,
+    OrderId NVARCHAR(100) NOT NULL,
+    PaymentId NVARCHAR(100) NOT NULL,
+    Amount DECIMAL(18,2) NOT NULL,
+    Currency NVARCHAR(10) NOT NULL,
+    Status NVARCHAR(50) NOT NULL,
+    CreatedAt DATETIME2 NOT NULL DEFAULT GETUTCDATE()
+);
+GO
+
+CREATE TABLE WebhookEvents
+(
+    Id BIGINT PRIMARY KEY IDENTITY,
+    EventId NVARCHAR(200) NOT NULL,
+    EventType NVARCHAR(100) NOT NULL,
+    Payload NVARCHAR(MAX) NOT NULL,
+    Signature NVARCHAR(500) NOT NULL,
+    IsProcessed BIT NOT NULL DEFAULT 0,
+    RetryCount INT NOT NULL DEFAULT 0,
+    CreatedAt DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
+    ProcessedAt DATETIME2 NULL
+);
+GO
+
+CREATE TABLE ProcessedWebhooks
+(
+    Id BIGINT PRIMARY KEY IDENTITY,
+    EventId NVARCHAR(200) NOT NULL UNIQUE,
+    ProcessedAt DATETIME2 NOT NULL DEFAULT GETUTCDATE()
+);
+
+CREATE UNIQUE INDEX IX_ProcessedWebhooks_EventId ON ProcessedWebhooks(EventId);
+GO
+SELECT * FROM Payments; SELECT * FROM WebhookEvents ;SELECT * FROM ProcessedWebhooks;
+
+SELECT 
+    name,
+    physical_name,
+    type_desc
+FROM sys.master_files
+WHERE database_id = DB_ID('WebhookDemo');
