@@ -54,9 +54,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransit Setup", "..\Mas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransit Using RabbitMQ", "..\MassTransit Using RabbitMQ\MassTransit Using RabbitMQ.csproj", "{0D85A00C-1A36-430D-AA4F-DC48E06DCC4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransit Using RabbitMQ (Outbox + Saga Pattern)", "..\MassTransit Using RabbitMQ (Outbox + Saga Pattern)\MassTransit Using RabbitMQ (Outbox + Saga Pattern).csproj", "{68D8AAB5-2839-4AAD-B9D8-0D7FFD22498D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalAnnotationUtils", "..\GlobalAnnotationUtils\GlobalAnnotationUtils.csproj", "{9F4F6C42-168E-452B-80D1-00808D7751F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outbox Pattern", "..\Outbox Pattern\Outbox Pattern.csproj", "{7FF91ED7-A695-4342-9304-48200D2844EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -156,14 +156,14 @@ Global
 		{0D85A00C-1A36-430D-AA4F-DC48E06DCC4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D85A00C-1A36-430D-AA4F-DC48E06DCC4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D85A00C-1A36-430D-AA4F-DC48E06DCC4A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{68D8AAB5-2839-4AAD-B9D8-0D7FFD22498D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68D8AAB5-2839-4AAD-B9D8-0D7FFD22498D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68D8AAB5-2839-4AAD-B9D8-0D7FFD22498D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68D8AAB5-2839-4AAD-B9D8-0D7FFD22498D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9F4F6C42-168E-452B-80D1-00808D7751F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9F4F6C42-168E-452B-80D1-00808D7751F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F4F6C42-168E-452B-80D1-00808D7751F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F4F6C42-168E-452B-80D1-00808D7751F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FF91ED7-A695-4342-9304-48200D2844EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FF91ED7-A695-4342-9304-48200D2844EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FF91ED7-A695-4342-9304-48200D2844EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FF91ED7-A695-4342-9304-48200D2844EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
