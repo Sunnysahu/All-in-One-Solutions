@@ -1,37 +1,20 @@
 ﻿```
-OutboxPatternDemo
+OutboxPatternApi
 │
-├── Controllers
-│     └── OrderController.cs
+├── Controllers/
 │
-├── Services
-│     ├── OrderService.cs
-│     ├── OutboxService.cs
-│     └── MessagePublisher.cs
+├── Data/
+│    └── Sql/
 │
-├── BackgroundServices
-│     └── OutboxWorker.cs
+├── Models/
 │
-├── Models
-│     ├── Order.cs
-│     ├── OutboxMessage.cs
-│     ├── DeadLetterMessage.cs
-│     └── ProcessedMessage.cs
+├── DTOs/
 │
-├── DTOs
-│     └── CreateOrderRequest.cs
+├── Repositories/
+│    └── Interfaces/
 │
-├── Data
-│     └── AppDbContext.cs
+├── Services/
+│    └── Interfaces/
 │
-├── SQL
-│     ├──001_CreateOrders.sql
-│     ├──002_CreateOutbox.sql
-│     ├──003_CreateDeadLetter.sql
-│     ├──004_CreateProcessedMessages.sql
-│     └──005_CreateIndexes.sql
-│
-├── Program.cs
-│
-└── appsettings.json
+├── BackgroundServices/
 ```
