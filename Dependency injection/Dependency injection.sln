@@ -58,6 +58,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalAnnotationUtils", "..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outbox Pattern", "..\Outbox Pattern\Outbox Pattern.csproj", "{7FF91ED7-A695-4342-9304-48200D2844EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutBox Pattern with All", "..\OutBox Pattern with All\OutBox Pattern with All.csproj", "{CFC3CDD9-58A0-4DF2-954A-CE14DFF15EA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -164,6 +166,10 @@ Global
 		{7FF91ED7-A695-4342-9304-48200D2844EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FF91ED7-A695-4342-9304-48200D2844EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FF91ED7-A695-4342-9304-48200D2844EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFC3CDD9-58A0-4DF2-954A-CE14DFF15EA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFC3CDD9-58A0-4DF2-954A-CE14DFF15EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFC3CDD9-58A0-4DF2-954A-CE14DFF15EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFC3CDD9-58A0-4DF2-954A-CE14DFF15EA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
