@@ -23,6 +23,8 @@ builder.Services.AddMassTransit(busConfigurator =>
     //busConfigurator.UsingAmazonSqs();
 });
 
+builder.Services.AddHealthChecks();
+
 builder.Services.AddHostedService<MessagePublisher>();
 
 var app = builder.Build();
@@ -39,5 +41,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHealthChecks("/health");
 
 app.Run();
