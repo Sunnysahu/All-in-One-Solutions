@@ -1,5 +1,6 @@
 using MassTransit;
 using MassTransit_Setup;
+using MassTransit_Setup.Extension.HealthExtension;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapHealthChecks("/health");
+// app.MapHealthChecks("/health");
+app.MapCustomHealthChecks();
 
 app.Run();
