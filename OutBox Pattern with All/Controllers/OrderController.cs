@@ -23,8 +23,6 @@ namespace OutBox_Pattern_with_All.Controllers
         {
             await using var transaction = await _db.Database.BeginTransactionAsync();
 
-            var messageId = Guid.NewGuid();
-
             var order = new Order
             {
                 Id = Guid.NewGuid(),
@@ -35,9 +33,8 @@ namespace OutBox_Pattern_with_All.Controllers
 
             await _db.Orders.AddAsync(order);
 
-            OrderCreatedEvent orderCreatedEvent = new OrderCreatedEvent
+            var orderCreatedEvent = new OrderCreatedEvent
             {
-                MessageId = messageId,
                 OrderId = order.Id,
                 ProductName = order.ProductName,
                 Quantity = order.Quantity,
@@ -46,12 +43,12 @@ namespace OutBox_Pattern_with_All.Controllers
 
             var outbox = new OutboxMessage
             {
-                Id = messageId,
+                Id = Guid.NewGuid(),
                 EventType = nameof(OrderCreatedEvent),
                 Payload = JsonSerializer.Serialize(orderCreatedEvent),
                 Status = OutboxStatus.Pending,
                 RetryCount = 0,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.Now
             };
 
             await _db.OutboxMessages.AddAsync(outbox);

@@ -1,5 +1,5 @@
 ﻿```
-OutBox_Pattern_with_All
+Project
 │
 ├── Constants
 │   ├── DbConstants.cs
@@ -9,26 +9,28 @@ OutBox_Pattern_with_All
 │   └── OrderController.cs
 │
 ├── Data
-│   └── AppDbContext.cs
+│   ├── AppDbContext.cs
+│   └── Sql
+│       └── Database.sql
 │
 ├── Entities
 │   ├── Order.cs
-│   ├── OutboxMessage.cs
-│   ├── ProcessedMessage.cs          <-- NEW
+│   └── OutboxMessage.cs
 │
 ├── Models
 │   ├── CreateOrderRequest.cs
 │   └── OrderCreatedEvent.cs
 │
 ├── Services
-│   ├── RabbitMqConnection.cs
-│   ├── RabbitMqInitializer.cs
+│   ├── OutboxService.cs
 │   ├── RabbitMqPublisher.cs
-│   ├── RabbitMqConsumer.cs          <-- NEW
-│   ├── OutboxProcessorService.cs
-│   └── MessageProcessor.cs          <-- NEW
+│   └── OutboxProcessorService.cs
+│
+├── Helpers
+│   └── JsonHelper.cs
 │
 ├── Program.cs
+│
 └── appsettings.json
 ```
 
