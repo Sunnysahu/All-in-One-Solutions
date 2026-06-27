@@ -1,0 +1,6 @@
+@OutBox_Pattern_with_All_HostAddress = http://localhost:5043
+
+GET {{OutBox_Pattern_with_All_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
