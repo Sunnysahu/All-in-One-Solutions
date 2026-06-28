@@ -23,13 +23,21 @@ builder.Services.AddDbContextFactory<AppDbContext>(options =>
 
 builder.Services.AddSingleton<RabbitMqConnection>();
 
-builder.Services.AddSingleton<RabbitMqInitializer>();
+//builder.Services.AddSingleton<RabbitMqInitializer>();
 
 builder.Services.AddSingleton<RabbitMqPublisher>();
 
+builder.Services.AddSingleton<MessageProcessor>();
+
 builder.Services.AddHostedService<OutboxProcessorService>();
 
+builder.Services.AddSingleton<RabbitMqTopology>();
+
+builder.Services.AddHostedService<RabbitMqConsumer>();
+
 var app = builder.Build();
+
+app.Services.GetRequiredService<RabbitMqTopology>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

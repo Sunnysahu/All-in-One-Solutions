@@ -34,6 +34,18 @@ Project
 └── appsettings.json
 ```
 
+```
+                 RabbitMQ Connection
+                        │
+      ┌───────────┬────────────┬────────────────┐
+      ▼           ▼            ▼
+ Publisher     Consumer     Retry Consumer
+ Channel       Channel        Channel
+      │           │               │
+      ▼           ▼               ▼
+ BasicPublish() BasicConsume() BasicConsume()
+ ```
+
 ## FLOW
 
 ```

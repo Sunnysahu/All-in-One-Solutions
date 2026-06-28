@@ -13,5 +13,7 @@ namespace OutBox_Pattern_with_All.Data
         public DbSet<Order> Orders => Set<Order>();
 
         public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
+
+        public DbSet<ProcessedMessage> ProcessedMessages { get; set; }
     }
 }

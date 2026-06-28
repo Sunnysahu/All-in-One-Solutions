@@ -4,32 +4,49 @@ using System.Text;
 
 namespace OutBox_Pattern_with_All.Services
 {
-    public class RabbitMqPublisher
+    public sealed class RabbitMqPublisher : IAsyncDisposable
     {
-        private readonly RabbitMqInitializer _initializer;
+        private readonly IChannel _channel; // IChannel is NOT thread-safe.
 
+        private readonly SemaphoreSlim _publishLock = new(1, 1);
 
-        public RabbitMqPublisher(RabbitMqInitializer initializer)
+        public RabbitMqPublisher(RabbitMqConnection connection)
         {
-            _initializer = initializer;
+            _channel = connection.Connection.CreateChannelAsync().GetAwaiter().GetResult();
         }
-
 
         public async Task PublishAsync(string payload)
         {
-            var body = Encoding.UTF8.GetBytes(payload);
-            var props = new BasicProperties
+            byte[] body = Encoding.UTF8.GetBytes(payload);
+
+            var properties = new BasicProperties
             {
                 Persistent = true
             };
 
-            await _initializer.Channel.BasicPublishAsync(
-                exchange: RabbitMqConstants.Exchange,
-                routingKey: RabbitMqConstants.RoutingKey,
-                mandatory: true,
-                basicProperties: props,
-                body: body
-            );
+            await _publishLock.WaitAsync();
+
+            try
+            {
+                await _channel.BasicPublishAsync(
+                    exchange: RabbitMqConstants.Exchange,
+                    routingKey: RabbitMqConstants.RoutingKey,
+                    mandatory: true,
+                    basicProperties: properties,
+                    body: body
+                );
+            }
+            finally
+            {
+                _publishLock.Release();
+            }
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await _channel.DisposeAsync();
+
+            _publishLock.Dispose();
         }
     }
 }

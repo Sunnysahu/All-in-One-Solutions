@@ -1,4 +1,6 @@
-﻿USE master;
+﻿/*
+"""
+USE master;
 GO
 
 ALTER DATABASE OutboxProductionDb
@@ -46,3 +48,7 @@ CREATE TABLE OutboxMessages
     ProcessedAt DATETIME2 NULL
 );
 GO
+
+"""
+
+*/

@@ -2,6 +2,8 @@
 {
     public class OrderCreatedEvent
     {
+        public Guid MessageId { get; set; }
+
         public Guid OrderId { get; set; }
 
         public string ProductName { get; set; } = string.Empty;
