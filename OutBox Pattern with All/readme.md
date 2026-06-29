@@ -524,3 +524,18 @@ rabbit@rabbit3
 ```
 
 The leader handles reads and writes, while the other two nodes maintain replicas. If the leader node goes down, another member can be elected leader, allowing the queue to continue operating.
+
+
+## Added Health Check
+
+Hit this Endpoint
+
+```
+https://localhost:7108/health
+```
+
+and
+
+```
+https://localhost:7108/api/RabbitMqAdmin/stats
+```

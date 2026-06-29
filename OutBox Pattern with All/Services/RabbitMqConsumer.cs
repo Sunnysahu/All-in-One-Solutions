@@ -38,8 +38,6 @@ namespace OutBox_Pattern_with_All.Services
             await Task.Delay(Timeout.Infinite, stoppingToken);
         }
 
-
-
         private async Task OnMessageReceived(object sender, BasicDeliverEventArgs eventArgs)
         {
             try
@@ -115,11 +113,9 @@ namespace OutBox_Pattern_with_All.Services
 
         public override async Task StopAsync(CancellationToken cancellationToken)
         {
-            if (_channel != null)
-            {
-                await _channel.CloseAsync();
-                await _channel.DisposeAsync();
-            }
+            Console.WriteLine("Stopping RabbitMQ Consumer...");
+
+            if (_channel is not null) await _channel.CloseAsync();
 
             await base.StopAsync(cancellationToken);
         }

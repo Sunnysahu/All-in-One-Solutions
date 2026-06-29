@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using OutBox_Pattern_with_All.Data;
+using OutBox_Pattern_with_All.HealthChecks;
 using OutBox_Pattern_with_All.Services;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +40,14 @@ builder.Services.AddHostedService<OutboxProcessorService>();
 
 builder.Services.AddHostedService<RabbitMqConsumer>();
 
+builder.Services.AddHostedService<CleanupService>();
+
+builder.Services.AddHttpClient<RabbitMqManagementService>();
+
+builder.Services.AddHealthChecks()
+    .AddCheck<SqlHealthCheck>("SQL Server")
+    .AddCheck<RabbitMqHealthCheck>("RabbitMQ");
+
 var app = builder.Build();
 
 app.Services.GetRequiredService<RabbitMqTopology>();
@@ -52,6 +63,32 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    ResponseWriter = async (context, report) =>
+    {
+        context.Response.ContentType = "application/json";
+
+        var result = new
+        {
+            Status = report.Status.ToString(),
+
+            Checks = report.Entries.Select(entry => new
+            {
+                Name = entry.Key,
+                Status = entry.Value.Status.ToString(),
+                Description = entry.Value.Description
+            })
+        };
+
+        await context.Response.WriteAsync(
+        JsonSerializer.Serialize(result,
+        new JsonSerializerOptions
+        {
+            WriteIndented = true
+        }));
+    }
+});
 app.MapControllers();
 
 app.Run();

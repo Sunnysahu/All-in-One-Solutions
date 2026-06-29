@@ -26,6 +26,10 @@ namespace OutBox_Pattern_with_All.Services
 
         public async ValueTask DisposeAsync()
         {
+            Console.WriteLine("Closing RabbitMQ Connection...");
+
+            await Connection.CloseAsync();
+
             await Connection.DisposeAsync();
         }
     }
