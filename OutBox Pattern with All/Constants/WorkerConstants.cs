@@ -4,7 +4,9 @@
     {
         public static readonly string WorkerId = Environment.MachineName + "-" + Guid.NewGuid();
 
-        public const int BatchSize = 100;
+        public const int BatchSize = 1000;
+
+        public const int SaveBatchSize = 1000;
 
         public const int LockTimeoutMinutes = 5;
     }

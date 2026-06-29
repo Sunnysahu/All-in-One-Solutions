@@ -51,7 +51,7 @@ namespace OutBox_Pattern_with_All.Controllers
                 Payload = JsonSerializer.Serialize(orderCreatedEvent),
                 Status = OutboxStatus.Pending,
                 RetryCount = 0,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.Now
             };
 
             await _db.OutboxMessages.AddAsync(outbox);

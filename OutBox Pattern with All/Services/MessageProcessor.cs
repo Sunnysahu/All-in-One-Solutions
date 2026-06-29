@@ -19,9 +19,11 @@ namespace OutBox_Pattern_with_All.Services
         {
             var orderCreatedEvent = JsonSerializer.Deserialize<OrderCreatedEvent>(payload)!;
 
-            await using var db =
-                await _dbFactory.CreateDbContextAsync();
+            await using var db = await _dbFactory.CreateDbContextAsync();
 
+
+            if (orderCreatedEvent.ProductName == "FAIL") throw new Exception("Simulated Failure");
+            
             bool alreadyProcessed =
                 await db.ProcessedMessages.AnyAsync(x => x.MessageId == orderCreatedEvent.MessageId);
 
@@ -42,7 +44,7 @@ namespace OutBox_Pattern_with_All.Services
             new ProcessedMessage
             {
                 MessageId = orderCreatedEvent.MessageId,
-                ProcessedAt = DateTime.UtcNow
+                ProcessedAt = DateTime.Now
             });
 
             await db.SaveChangesAsync();

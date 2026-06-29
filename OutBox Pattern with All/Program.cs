@@ -29,9 +29,11 @@ builder.Services.AddSingleton<RabbitMqPublisher>();
 
 builder.Services.AddSingleton<MessageProcessor>();
 
-builder.Services.AddHostedService<OutboxProcessorService>();
+builder.Services.AddSingleton<OutboxMessageLeaseService>();
 
 builder.Services.AddSingleton<RabbitMqTopology>();
+
+builder.Services.AddHostedService<OutboxProcessorService>();
 
 builder.Services.AddHostedService<RabbitMqConsumer>();
 

@@ -9,7 +9,12 @@ namespace OutBox_Pattern_with_All.Services
 
         public RabbitMqInitializer(RabbitMqConnection connection)
         {
-            Channel = connection.Connection.CreateChannelAsync().GetAwaiter().GetResult();
+            Channel = connection.Connection.CreateChannelAsync(
+                    new CreateChannelOptions(
+                        publisherConfirmationsEnabled: true,
+                        publisherConfirmationTrackingEnabled: true
+                    )
+            ).GetAwaiter().GetResult();
 
             Channel.ExchangeDeclareAsync(
                 exchange: RabbitMqConstants.Exchange,

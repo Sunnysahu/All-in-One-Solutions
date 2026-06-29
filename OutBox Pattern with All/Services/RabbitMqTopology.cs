@@ -75,7 +75,7 @@ namespace OutBox_Pattern_with_All.Services
             {
                 ["x-dead-letter-exchange"] = RabbitMqConstants.Exchange,
 
-                ["x-dead-letter-routing-key"] = RabbitMqConstants.DeadLetterRoutingKey
+                ["x-dead-letter-routing-key"] = RabbitMqConstants.RetryRoutingKey
             };
 
             await channel.QueueDeclareAsync(

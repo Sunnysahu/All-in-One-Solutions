@@ -12,6 +12,10 @@
 
         public int RetryCount { get; set; }
 
+        public string? LockedBy { get; set; }
+
+        public DateTime? LockedAt { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public DateTime? ProcessedAt { get; set; }
