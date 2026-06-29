@@ -1,5 +1,5 @@
 ﻿/*
-"""
+
 USE master;
 GO
 
@@ -49,6 +49,34 @@ CREATE TABLE OutboxMessages
 );
 GO
 
-"""
+CREATE TABLE ProcessedMessages
+(
+    MessageId UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    ProcessedAt DATETIME2 NOT NULL
+);
+GO
+
+CREATE TYPE GuidListType AS TABLE
+(
+    Id UNIQUEIDENTIFIER PRIMARY KEY
+);
+GO
+
+    SELECT * FROM Orders;
+    SELECT * FROM OutboxMessages
+
+    SELECT * FROM ProcessedMessages
+    SELECT COUNT(*) as Total_Processed_Message FROM ProcessedMessages ;
+
+
+
+SELECT
+    Id,
+    Status,
+    LockedBy,
+    LockedAt
+FROM OutboxMessages where status = 0
+ORDER BY CreatedAt;
+
 
 */
