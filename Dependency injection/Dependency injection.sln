@@ -60,6 +60,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outbox Pattern", "..\Outbox
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutBox Pattern with All", "..\OutBox Pattern with All\OutBox Pattern with All.csproj", "{CFC3CDD9-58A0-4DF2-954A-CE14DFF15EA7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delegates", "..\Delegates\Delegates.csproj", "{ADD89A0D-2CD4-4F38-80E7-218A3974DAA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -170,6 +172,10 @@ Global
 		{CFC3CDD9-58A0-4DF2-954A-CE14DFF15EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFC3CDD9-58A0-4DF2-954A-CE14DFF15EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFC3CDD9-58A0-4DF2-954A-CE14DFF15EA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADD89A0D-2CD4-4F38-80E7-218A3974DAA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADD89A0D-2CD4-4F38-80E7-218A3974DAA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADD89A0D-2CD4-4F38-80E7-218A3974DAA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADD89A0D-2CD4-4F38-80E7-218A3974DAA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
