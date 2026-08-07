@@ -54,7 +54,7 @@ namespace OutBox_Pattern_with_All.Services
                     (
                         MINUTE,
                         -@LockTimeout,
-                        SYSUTCDATETIME()
+                        GETDATE()
                     )
                 )
 
@@ -67,7 +67,7 @@ namespace OutBox_Pattern_with_All.Services
 
                 LockedBy = @WorkerId,
 
-                LockedAt = SYSUTCDATETIME()
+                LockedAt = GETDATE()
 
             OUTPUT INSERTED.*;
             """;
@@ -147,7 +147,7 @@ namespace OutBox_Pattern_with_All.Services
             UPDATE o
             SET
                 Status = @Processed,
-                ProcessedAt = SYSUTCDATETIME(),
+                ProcessedAt = GETDATE(),
                 LockedBy = NULL,
                 LockedAt = NULL
             FROM OutboxMessages o

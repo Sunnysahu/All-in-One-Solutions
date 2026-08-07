@@ -17,7 +17,7 @@ namespace OutBox_Pattern_with_All.Services
                 NetworkRecoveryInterval = TimeSpan.FromSeconds(10) // Retry every 10 seconds
 
             };
-
+            
             Connection = factory
                 .CreateConnectionAsync()
                 .GetAwaiter()

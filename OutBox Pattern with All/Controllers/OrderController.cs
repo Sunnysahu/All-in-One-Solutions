@@ -13,15 +13,13 @@ namespace OutBox_Pattern_with_All.Controllers
     {
         private readonly AppDbContext _db;
 
-        public OrderController(AppDbContext db)
-        {
-            _db = db;
-        }
+        public OrderController(AppDbContext db) => _db = db;
 
         [HttpPost("create-orders")]
-        public async Task<IActionResult> Create(CreateOrderRequest request)
-        {
-            await using var transaction = await _db.Database.BeginTransactionAsync();
+        public async Task<IActionResult> Create(CreateOrderRequest request, CancellationToken cancellationToken)
+        {            
+            await using var transaction = 
+                await _db.Database.BeginTransactionAsync(cancellationToken);
 
             var messageId = Guid.NewGuid();
 
@@ -33,7 +31,7 @@ namespace OutBox_Pattern_with_All.Controllers
                 CreatedAt = DateTime.Now
             };
 
-            await _db.Orders.AddAsync(order);
+            await _db.Orders.AddAsync(order, cancellationToken);
 
             OrderCreatedEvent orderCreatedEvent = new OrderCreatedEvent
             {
@@ -54,12 +52,11 @@ namespace OutBox_Pattern_with_All.Controllers
                 CreatedAt = DateTime.Now
             };
 
-            await _db.OutboxMessages.AddAsync(outbox);
+            await _db.OutboxMessages.AddAsync(outbox, cancellationToken);
 
-            await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync(cancellationToken);
 
-            await transaction.CommitAsync();
-
+            await transaction.CommitAsync(cancellationToken);
             return Ok(order.Id);
         }
     }
