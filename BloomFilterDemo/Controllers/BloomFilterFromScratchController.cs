@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BloomFilterDemo.Controllers;
 
+[Route("api/[controller]")]
+[ApiController]
 public class BloomFilterFromScratchController(AppDbContext db) : ControllerBase
 {
     private readonly AppDbContext _db = db;
@@ -29,7 +31,7 @@ public class BloomFilterFromScratchController(AppDbContext db) : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetProduct(int id)
+    public async Task<IActionResult> GetProduct([FromRoute] int id)
     {
         // Bloom Filter check
         if (!_filter.MightContain(id))
@@ -53,5 +55,32 @@ public class BloomFilterFromScratchController(AppDbContext db) : ControllerBase
         }
 
         return Ok(product);
+    }
+
+    [HttpGet("test-false-positive")]
+    public IActionResult TestFalsePositive()
+    {
+        var filter = new SimpleBloomFilter(10);
+
+        filter.Add(1);
+
+        // Find an ID that was never added,
+        // but whose hash positions are already set.
+        for (int id = 2; id < 100; id++)
+        {
+            if (filter.MightContain(id))
+            {
+                return Ok(new
+                {
+                    insertedId = 1,
+                    testedId = id,
+                    wasInserted = false,
+                    bloomFilterResult = "Possibly exists",
+                    explanation = "False positive: the filter says possibly present, but this ID was never added."
+                });
+            }
+        }
+
+        return Ok(new { message = "No false positive found in this test range." });
     }
 }
