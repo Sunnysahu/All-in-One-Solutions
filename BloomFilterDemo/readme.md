@@ -369,3 +369,10 @@ That's the core Bloom Filter algorithm.
 7. Bloom Filters do not produce **false negatives** when implemented and used correctly.
 8. Our current hash functions are intentionally simple for learning purposes.
 9. A production implementation would need better hashing and careful sizing.
+
+
+## Run Docker if needed
+
+`
+docker run -d --name bloom-redis -p 6379:6379 redis
+`
